@@ -147,6 +147,9 @@ For instance, a `fullID` of `"1234/5678"` means that block `5678` is located ins
 *(This list will be updated as new features are added)*
 
 ### 🧱 Blocks & Scene
+- **`SpawnAssetAndGetID <assetID>`** : Spawn an asset (image/audio) and returns its new `fullID`.
+  - `assetID`: The `assetID` referencing the asset.
+  - Example: `SpawnAssetAndGetID "69050ba148fe87dfd347f65c"`
 - **`CopyBlock <sourcePathID> <parentPathID>`** : Duplicates a block and returns its new `fullID`.
   - `sourcePathID`: The `fullID` of the block to copy.
   - `parentPathID`: (Optional) The `fullID` of a `SubPatch` where the new block should be spawned. Leave empty `""` to spawn it at the root of the world.
