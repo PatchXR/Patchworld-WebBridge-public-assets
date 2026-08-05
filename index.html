@@ -455,6 +455,10 @@
             <h1>Live Feed 🎤</h1>
         </div>
         <div class="header-stats">
+            <select id="envSelect" style="background: rgba(0,0,0,0.5); color: #fff; border: 1px solid #444; border-radius: 4px; padding: 2px 5px; font-size: 10px; margin-right: 10px;" onchange="onEnvChange()">
+                <option value="https://api.patchxr.io">Prod API</option>
+                <option value="https://dev.patchxr.io">Dev API</option>
+            </select>
             <span id="totalCount">0</span> contributions
         </div>
     </div>
@@ -567,9 +571,25 @@
         };
 
         // ── API ──
+        function onEnvChange() {
+            // Reset state when switching environments
+            knownAssetIds.clear();
+            knownTextIds.clear();
+            allAssets = [];
+            allTexts = [];
+            document.getElementById('totalCount').innerText = '0';
+            document.getElementById('countAll').innerText = '0';
+            document.getElementById('countMedia').innerText = '0';
+            document.getElementById('countTexts').innerText = '0';
+            renderAll();
+            renderMedia();
+            renderTexts();
+            fetchRecent();
+        }
+
         async function fetchRecent() {
             try {
-                const API_URL = (typeof PatchWorld !== 'undefined' && PatchWorld.API_URL) || 'https://api.patchxr.io';
+                const API_URL = document.getElementById('envSelect').value;
                 const res = await fetch(`${API_URL}/public-uploads/recent?limit=20`);
                 if (!res.ok) throw new Error(`HTTP ${res.status}`);
                 const data = await res.json();
